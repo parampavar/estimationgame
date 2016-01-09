@@ -1,101 +1,101 @@
 
 -- Table: drop tables
 
-DROP TABLE IF EXISTS estimate;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS toys;
-DROP TABLE IF EXISTS tools;
+DROP TABLE IF EXISTS tblestimate;
+DROP TABLE IF EXISTS tbluser;
+DROP TABLE IF EXISTS tbltoy;
+DROP TABLE IF EXISTS tbltool;
 
 
--- Table: users
+-- Table: tbluser
 
-CREATE TABLE IF NOT EXISTS users
+CREATE TABLE IF NOT EXISTS tbluser
 (
   id serial NOT NULL,
-  idp_user_id character varying(100),
+  idp_tbluser_id character varying(100),
   name character varying(100),
   last_updated date,
   status character varying(100),
-  user_attributes json,
-  CONSTRAINT pk_users PRIMARY KEY (id),
-  CONSTRAINT unq_users_01 UNIQUE (name)
+  tbluser_attributes json,
+  CONSTRAINT pk_tbluser PRIMARY KEY (id),
+  CONSTRAINT unq_tbluser_01 UNIQUE (name)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE users
+ALTER TABLE tbluser
   OWNER TO postgres;
 
--- Table: toys
+-- Table: tbltoy
 
-CREATE TABLE IF NOT EXISTS toys
+CREATE TABLE IF NOT EXISTS tbltoy
 (
   id serial NOT NULL,
   name character varying(100),
   "isActive" boolean,
-  CONSTRAINT pk_toys_01 PRIMARY KEY (id),
-  CONSTRAINT unq_toys_01 UNIQUE (name)
+  CONSTRAINT pk_tbltoy_01 PRIMARY KEY (id),
+  CONSTRAINT unq_tbltoy_01 UNIQUE (name)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE toys
+ALTER TABLE tbltoy
   OWNER TO postgres;
 
--- Table: tools
+-- Table: tbltool
 
-CREATE TABLE IF NOT EXISTS tools
+CREATE TABLE IF NOT EXISTS tbltool
 (
   id serial NOT NULL,
   name character varying(100),
   "isActive" boolean,
-  CONSTRAINT pk_tools_01 PRIMARY KEY (id),
-  CONSTRAINT unq_tools_01 UNIQUE (name)
+  CONSTRAINT pk_tbltool_01 PRIMARY KEY (id),
+  CONSTRAINT unq_tbltool_01 UNIQUE (name)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE tools
+ALTER TABLE tbltool
   OWNER TO postgres;
 
--- Table: create estimate
+-- Table: create tblestimate
 
-CREATE TABLE IF NOT EXISTS estimate
+CREATE TABLE IF NOT EXISTS tblestimate
 (
   id serial NOT NULL,
+  tbluserid bigint NOT NULL,
+  tbltoyid bigint NOT NULL,
   value integer NOT NULL DEFAULT 0,
   "createdDate" date NOT NULL DEFAULT ('now'::text)::date,
-  userid bigint NOT NULL,
-  toyid bigint NOT NULL,
-  CONSTRAINT pk_estimate PRIMARY KEY (id),
-  CONSTRAINT fk_toys_estimate_id FOREIGN KEY (toyid)
-      REFERENCES toys (id) MATCH SIMPLE
+  CONSTRAINT pk_tblestimate PRIMARY KEY (id),
+  CONSTRAINT fk_tbltoy_tblestimate_id FOREIGN KEY (tbltoyid)
+      REFERENCES tbltoy (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_users_estimate_id FOREIGN KEY (userid)
-      REFERENCES users (id) MATCH SIMPLE
+  CONSTRAINT fk_tbluser_tblestimate_id FOREIGN KEY (tbluserid)
+      REFERENCES tbluser (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE estimate
+ALTER TABLE tblestimate
   OWNER TO postgres;
 
--- Index: fki_toys_estimate_id
+-- Index: fki_tbltoy_tblestimate_id
 
-DROP INDEX IF EXISTS fki_toys_estimate_id;
+DROP INDEX IF EXISTS fki_tbltoy_tblestimate_id;
 
-CREATE INDEX fki_toys_estimate_id
-  ON estimate
+CREATE INDEX fki_tbltoy_tblestimate_id
+  ON tblestimate
   USING btree
-  (toyid);
+  (tbltoyid);
 
--- Index: fki_users_estimate_id
+-- Index: fki_tbluser_tblestimate_id
 
-DROP INDEX IF EXISTS fki_users_estimate_id;
+DROP INDEX IF EXISTS fki_tbluser_tblestimate_id;
 
-CREATE INDEX fki_users_estimate_id
-  ON estimate
+CREATE INDEX fki_tbluser_tblestimate_id
+  ON tblestimate
   USING btree
-  (userid);
+  (tbluserid);
 
