@@ -7,32 +7,32 @@ import (
 )
 
 type User struct {
-    id              int
-    idp_user_id     string
-    name            string
-    last_updated    time.Time
-    status          string
-    user_attributes string
+    Id              int
+    Idp_user_id     string
+    Name            string
+    Last_updated    time.Time
+    Status          string
+    User_attributes string
 }
 
 type Toy struct {
-	id                int
-	name              string
-	isActive          bool
+	Id                int
+	Name              string
+	IsActive          bool
 }
 
 type Tool struct {
-	id                int
-	name              string
-	isActive          bool
+	Id                int
+	Name              string
+	IsActive          bool
 }
 
 type Estimate struct {
-	id                int
-	userid            int
-	toyid             int
-	value             int
-	createdDate       time.Time
+	Id                int
+	Userid            int
+	Toyid             int
+	Value             int
+	CreatedDate       time.Time
 }
 
 type ModelPrintRows interface {  
