@@ -236,6 +236,7 @@ func main() {
 			RedisInit()
 			//RedisGetValue("abced")
 			RedisSetValue("abced", "1111111111111111111111111111111")
+			
 			// val, _ := RedisGetValue("abced")
 			// log.Info(val)
 			// RedisGetValue("abced")
