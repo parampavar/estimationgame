@@ -4,13 +4,14 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"os"
+	"reflect"
+
 	log "github.com/parampavar/estimationgame/Godeps/_workspace/src/github.com/cihub/seelog"
 	_ "github.com/parampavar/estimationgame/Godeps/_workspace/src/github.com/lib/pq"
 	"github.com/parampavar/estimationgame/Godeps/_workspace/src/gopkg.in/redis.v3"
 	"github.com/parampavar/estimationgame/models"
-	"net/http"
-	"os"
-	"reflect"
 )
 
 //import "github.com/parampavar/estimationgame/Godeps/_workspace/src/gopkg.in/redis.v3"
@@ -236,7 +237,7 @@ func main() {
 			RedisInit()
 			//RedisGetValue("abced")
 			RedisSetValue("abced", "1111111111111111111111111111111")
-			
+
 			// val, _ := RedisGetValue("abced")
 			// log.Info(val)
 			// RedisGetValue("abced")
